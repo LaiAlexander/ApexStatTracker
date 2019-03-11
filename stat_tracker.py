@@ -23,6 +23,9 @@ def update_stats():
     name = input("Name of legend: ")
     for legend in stats:
         if legend["name"].lower() == str(name).lower():
+            matches_won = int(input("Matches won: "))
+            legend["matches_won"] = matches_won
+
             kills = int(input("Kills: "))
             legend["kills"] = kills
 
@@ -32,12 +35,11 @@ def update_stats():
             matches_played = int(input("Matches played: "))
             legend["matches_played"] = matches_played
 
-            matches_won = int(input("Matches won: "))
-            legend["matches_won"] = matches_won
-
             matches_top_three = int(input("Matches top three: "))
             legend["matches_top_three"] = matches_top_three
 
+            print("-----------")
+            
             with open("stats.json", "w") as outfile:
                 json.dump(stats, outfile, indent=4)
             return
@@ -48,6 +50,7 @@ def add_win():
     for legend in stats:
         if legend["name"].lower() == str(name).lower():
             legend["matches_won"] = legend["matches_won"] + 1
+            print("-----------")
             return
     print("Couldn't find legend named " + name)
 
@@ -57,17 +60,19 @@ def add_match():
         if legend["name"].lower() == str(name).lower():
             legend["matches_played"] = legend["matches_played"] + 1
 
-            kills = int(input("Kills: "))
-            legend["kills"] = legend["kills"] + kills
-
-            damage = int(input("Damage: "))
-            legend["damage"] = legend["damage"] + damage
-
-            matches_won = int(input("Won match: "))
+            matches_won = int(input("Won this match: "))
             legend["matches_won"] = legend["matches_won"] + matches_won
 
-            matches_top_three = int(input("Top three: "))
+            kills = int(input("Kills this match: "))
+            legend["kills"] = legend["kills"] + kills
+
+            damage = int(input("Damage this match: "))
+            legend["damage"] = legend["damage"] + damage
+
+            matches_top_three = int(input("Top three this match: "))
             legend["matches_top_three"] = legend["matches_top_three"] + matches_top_three
+
+            print("-----------")
             return
     print("Couldn't find legend named " + name)
 
@@ -75,10 +80,11 @@ def view_stats():
     name = input("Name of legend: ")
     for legend in stats:
         if legend["name"].lower() == str(name).lower():
+            print("-----------")
+            print("Matches won: " + str(legend["matches_won"]))
             print("Kills: " + str(legend["kills"]))
             print("Damage: " + str(legend["damage"]))
             print("Matches played: " + str(legend["matches_played"]))
-            print("Matches won: " + str(legend["matches_won"]))
             print("Matches top three: " + str(legend["matches_top_three"]))
             if legend["matches_played"] > 0:
                 kpm = legend["kills"] / legend["matches_played"]
@@ -92,8 +98,7 @@ def view_stats():
 
                 adr = legend["damage"] / legend["matches_played"]
                 print("ADR: " + "%.2f" % (adr))
-            return
-    print("Couldn't find legend named " + name)
+            print("-----------")
 
 while True:
     command = input("Update (u), view stats (v), add match (m), add win (a) or exit (e)?\n")
