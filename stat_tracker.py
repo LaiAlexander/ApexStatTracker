@@ -6,7 +6,7 @@ with open("legends.json", "r") as read_file:
 try:
     with open("stats.json", "r") as read_file:
         stats = json.load(read_file)
-except OSError:
+except FileNotFoundError:
     stats = legends
     for legend in stats:
         legend["kills"] = 0
