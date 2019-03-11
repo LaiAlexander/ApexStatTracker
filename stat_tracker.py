@@ -1,13 +1,11 @@
 import json
 
-with open("legends.json", "r") as read_file:
-    legends = json.load(read_file)
-
 try:
     with open("stats.json", "r") as read_file:
         stats = json.load(read_file)
 except FileNotFoundError:
-    stats = legends
+    with open("legends.json", "r") as read_file:
+        stats = json.load(read_file)
     for legend in stats:
         legend["kills"] = 0
         legend["damage"] = 0
