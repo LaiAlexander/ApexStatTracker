@@ -49,7 +49,27 @@ def add_win():
         if legend["name"].lower() == str(name).lower():
             legend["matches_won"] = legend["matches_won"] + 1
             return
-    print("Couldn't find legend named " + name) 
+    print("Couldn't find legend named " + name)
+
+def add_match():
+    name = input("Name of legend: ")
+    for legend in stats:
+        if legend["name"].lower() == str(name).lower():
+            legend["matches_played"] = legend["matches_played"] + 1
+
+            kills = int(input("Kills: "))
+            legend["kills"] = legend["kills"] + kills
+
+            damage = int(input("Damage: "))
+            legend["damage"] = legend["damage"] + damage
+
+            matches_won = int(input("Won match: "))
+            legend["matches_won"] = legend["matches_won"] + matches_won
+
+            matches_top_three = int(input("Top three: "))
+            legend["matches_top_three"] = legend["matches_top_three"] + matches_top_three
+            return
+    print("Couldn't find legend named " + name)
 
 def view_stats():
     name = input("Name of legend: ")
@@ -76,9 +96,11 @@ def view_stats():
     print("Couldn't find legend named " + name)
 
 while True:
-    command = input("Update (u), view stats (v), add win (a) or exit (e)?\n")
+    command = input("Update (u), view stats (v), add match (m), add win (a) or exit (e)?\n")
     if command == "u":
         update_stats()
+    elif command == "m":
+        add_match()
     elif command == "a":
         add_win()
     elif command == "v":
