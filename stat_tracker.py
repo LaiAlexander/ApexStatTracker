@@ -1,3 +1,7 @@
+"""
+A script to help track stats in the game Apex Legends
+"""
+
 import json
 
 with open("legends.json", "r") as read_file:
@@ -20,18 +24,13 @@ except FileNotFoundError:
 print("Stat Tracker for Apex Legends\n")
 
 def print_current_stats(legend):
+    kpm, adr = calculate_stats(legend["kills"], 
+                                legend["damage"],
+                                legend["matches_played"])
     print("Current wins: " + str(legend["matches_won"]))
-    if legend["matches_played"] > 0:
-        kpm = legend["kills"] / legend["matches_played"]
-        print("Current kills per match: " + "%.2f" % kpm)
-
-        adr = legend["damage"] / legend["matches_played"]
-        print("Current ADR: " + "%.2f" % adr)
-    else:
-        print("Current kills per match: 0")
-        print("Current ADR: 0")
+    print("Current kills per match: " + "%.2f" % kpm)
+    print("Current ADR: " + "%.2f" % adr)
     print("----------")
-
 
 def update_stats():
     name = input("Name of legend: ")
@@ -96,34 +95,29 @@ def add_match():
             return
     print("Couldn't find legend named " + name)
 
-def calculate_stats(kills, damage, matches_won, matches_top_three, matches_played):
+def calculate_stats(kills, damage, matches_played, matches_won=None, matches_top_three=None):
     kpm = 0
     top_3_ratio = 0
     win_ratio = 0
     adr = 0
     if matches_played > 0:
         kpm = kills / matches_played
+        adr = damage / matches_played
+        if (matches_won is None or matches_top_three is None):
+            return kpm, adr
         top_3_ratio = matches_top_three / matches_played
         win_ratio = matches_won / matches_played
-        adr = damage / matches_played
     return kpm, top_3_ratio, win_ratio, adr
 
 def view_stats():
     name = input("Name of legend: ")
     for legend in stats:
         if legend["name"].lower() == str(name).lower():
-            print("-----------")
-            print("Matches won: " + str(legend["matches_won"]))
-            print("Kills: " + str(legend["kills"]))
-            print("Damage: " + str(legend["damage"]))
-            print("Matches played: " + str(legend["matches_played"]))
-            print("Matches top three: " + str(legend["matches_top_three"]))
-            kpm, top_3_ratio, win_ratio, adr = calculate_stats(legend["kills"], legend["damage"], legend["matches_won"], legend["matches_top_three"], legend["matches_played"])
-            print("Kills per match: " + "%.2f" % kpm)
-            print("Top 3 ratio: " + "%.2f" % top_3_ratio)
-            print("Win ratio: " + "%.2f" % win_ratio)
-            print("ADR: " + "%.2f" % adr)
-            print("-----------")
+            print_stats(legend["kills"], 
+                        legend["damage"],
+                        legend["matches_played"],
+                        legend["matches_won"],
+                        legend["matches_top_three"])
 
 def view_all_stats():
     matches_won = 0
@@ -138,13 +132,21 @@ def view_all_stats():
         damage = damage + legend["damage"]
         matches_played = matches_played + legend["matches_played"]
         matches_top_three = matches_top_three + legend["matches_top_three"]
+    print_stats(kills, damage, matches_played, matches_won, matches_top_three)
+
+def print_stats(kills, damage, matches_played, matches_won, matches_top_three):
     print("-----------")
     print("Matches won: " + str(matches_won))
     print("Kills: " + str(kills))
     print("Damage: " + str(damage))
     print("Matches played: " + str(matches_played))
     print("Matches top three: " + str(matches_top_three))
-    kpm, top_3_ratio, win_ratio, adr = calculate_stats(kills, damage, matches_won, matches_top_three, matches_played)
+    kpm, top_3_ratio, win_ratio, adr = calculate_stats(kills,
+                                        damage,
+                                        matches_played,
+                                        matches_won,
+                                        matches_top_three
+                                        )
     print("Kills per match: " + "%.2f" % kpm)
     print("Top 3 ratio: " + "%.2f" % top_3_ratio)
     print("Win ratio: " + "%.2f" % win_ratio)
