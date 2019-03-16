@@ -68,6 +68,8 @@ def add_win():
         if legend["name"].lower() == str(name).lower():
             legend["matches_won"] = legend["matches_won"] + 1
             print("-----------")
+            with open("stats.json", "w") as outfile:
+                json.dump(stats, outfile, indent=4)
             return
     print("Couldn't find legend named " + name)
 
@@ -75,6 +77,8 @@ def add_match():
     name = input("Name of legend: ")
     for legend in stats:
         if legend["name"].lower() == str(name).lower():
+            print_current_stats(legend)
+
             legend["matches_played"] = legend["matches_played"] + 1
 
             matches_won = int(input("Won this match: "))
@@ -92,6 +96,9 @@ def add_match():
             print("-----------")
 
             print_current_stats(legend)
+
+            with open("stats.json", "w") as outfile:
+                json.dump(stats, outfile, indent=4)
             return
     print("Couldn't find legend named " + name)
 
@@ -154,7 +161,12 @@ def print_stats(kills, damage, matches_played, matches_won, matches_top_three):
     print("-----------")
 
 while True:
-    command = input("Update (u), view stats (v), view all stats (s), add match (m), add win (w) or exit (e)?\n")
+    command = input("Update (u),\n" +
+            "View stats (v),\n" +
+            "View all stats (s),\n" +
+            "Add match (m),\n" +
+            "Add win (w) or\n" +
+            "Exit (e)?\n")
     if command == "u":
         update_stats()
     elif command == "m":
