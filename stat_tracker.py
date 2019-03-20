@@ -114,7 +114,8 @@ def calculate_stats(kills, damage, matches_played, matches_won=None, matches_top
             return kpm, adr
         top_3_ratio = matches_top_three / matches_played
         win_ratio = matches_won / matches_played
-    return kpm, top_3_ratio, win_ratio, adr
+        return kpm, top_3_ratio, win_ratio, adr
+    return kpm, adr
 
 def view_stats():
     name = input("Name of legend: ")
