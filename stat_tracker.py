@@ -21,12 +21,10 @@ except FileNotFoundError:
     with open("stats.json", "w") as outfile:
         json.dump(stats, outfile, indent=4)
 
-print("Stat Tracker for Apex Legends\n")
-
 def print_current_stats(legend):
-    kpm, adr = calculate_stats(legend["kills"], 
-                                legend["damage"],
-                                legend["matches_played"])
+    kpm, adr = calculate_stats(legend["kills"],
+                               legend["damage"],
+                               legend["matches_played"])
     print("Current wins: " + str(legend["matches_won"]))
     print("Current kills per match: " + "%.2f" % kpm)
     print("Current ADR: " + "%.2f" % adr)
@@ -79,18 +77,14 @@ def add_match():
             print_current_stats(legend)
 
             legend["matches_played"] = legend["matches_played"] + 1
-
-            matches_won = int(input("Won this match: "))
-            legend["matches_won"] = legend["matches_won"] + matches_won
-
-            kills = int(input("Kills this match: "))
-            legend["kills"] = legend["kills"] + kills
-
-            damage = int(input("Damage this match: "))
-            legend["damage"] = legend["damage"] + damage
-
-            matches_top_three = int(input("Top three this match: "))
-            legend["matches_top_three"] = legend["matches_top_three"] + matches_top_three
+            legend["matches_won"] = (legend["matches_won"]
+                                     + take_input("Won this match: "))
+            legend["kills"] = (legend["kills"]
+                               + take_input("Kills this match: "))
+            legend["damage"] = (legend["damage"]
+                                + take_input("Damage this match: "))
+            legend["matches_top_three"] = (legend["matches_top_three"]
+                                           + take_input("Top three this match: "))
 
             print("-----------")
 
@@ -109,11 +103,11 @@ def calculate_stats(kills, damage, matches_played, matches_won=None, matches_top
     if matches_played > 0:
         kpm = kills / matches_played
         adr = damage / matches_played
-        if (matches_won is None or matches_top_three is None):
+        if matches_won is None or matches_top_three is None:
             return kpm, adr
         top_3_ratio = matches_top_three / matches_played
         win_ratio = matches_won / matches_played
-    if (matches_won is None or matches_top_three is None):
+    if matches_won is None or matches_top_three is None:
         return kpm, adr
     return kpm, top_3_ratio, win_ratio, adr
 
@@ -121,7 +115,7 @@ def view_stats():
     name = input("Name of legend: ")
     for legend in stats:
         if legend["name"].lower() == str(name).lower():
-            print_stats(legend["kills"], 
+            print_stats(legend["kills"],
                         legend["damage"],
                         legend["matches_played"],
                         legend["matches_won"],
@@ -152,35 +146,39 @@ def print_stats(kills, damage, matches_played, matches_won, matches_top_three):
     print("Matches played: " + str(matches_played))
     print("Matches top three: " + str(matches_top_three))
     kpm, top_3_ratio, win_ratio, adr = calculate_stats(kills,
-                                        damage,
-                                        matches_played,
-                                        matches_won,
-                                        matches_top_three
-                                        )
+                                                       damage,
+                                                       matches_played,
+                                                       matches_won,
+                                                       matches_top_three)
     print("Kills per match: " + "%.2f" % kpm)
     print("Top 3 ratio: " + "%.2f" % top_3_ratio)
     print("Win ratio: " + "%.2f" % win_ratio)
     print("ADR: " + "%.2f" % adr)
     print("-----------")
 
-while True:
-    command = input("Update (u),\n" +
-            "View stats (v),\n" +
-            "View all stats (s),\n" +
-            "Add match (m),\n" +
-            "Add win (w) or\n" +
-            "Exit (e)?\n")
-    if command == "u":
-        update_stats()
-    elif command == "m":
-        add_match()
-    elif command == "w":
-        add_win()
-    elif command == "v":
-        view_stats()
-    elif command == "s":
-        view_all_stats()
-    elif command == "e":
-        break
-    else:
-        print("Not a valid command.")
+def run():
+    print("Stat Tracker for Apex Legends\n")
+
+    while True:
+        command = input("Update (u),\n" +
+                        "View stats (v),\n" +
+                        "View all stats (s),\n" +
+                        "Add match (m),\n" +
+                        "Add win (w) or\n" +
+                        "Exit (e)?\n")
+        if command == "u":
+            update_stats()
+        elif command == "m":
+            add_match()
+        elif command == "w":
+            add_win()
+        elif command == "v":
+            view_stats()
+        elif command == "s":
+            view_all_stats()
+        elif command == "e":
+            break
+        else:
+            print("Not a valid command.")
+
+run()
