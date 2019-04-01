@@ -126,6 +126,8 @@ def view_stats():
                         legend["matches_played"],
                         legend["matches_won"],
                         legend["matches_top_three"])
+            return
+    print("Couldn't find legend named " + name)
 
 def view_all_stats():
     matches_won = 0
