@@ -38,19 +38,11 @@ def update_stats():
         if legend["name"].lower() == str(name).lower():
             print_current_stats(legend)
 
-            matches_won = int(input("Matches won: "))
-            legend["matches_won"] = matches_won
-
-            kills = int(input("Kills: "))
-            legend["kills"] = kills
-
-            damage = int(input("Damage: "))
-            legend["damage"] = damage
-
+            legend["matches_won"] = take_input("Matches won: ")
+            legend["kills"] = take_input("Kills: ")
+            legend["damage"] = take_input("Damage: ")
             legend["matches_played"] = take_input("Matches played: ")
-
-            matches_top_three = int(input("Matches top three: "))
-            legend["matches_top_three"] = matches_top_three
+            legend["matches_top_three"] = take_input("Matches top three: ")
 
             print("-----------")
 
@@ -63,11 +55,10 @@ def update_stats():
 
 def take_input(text):
     entry = input(text)
-    try:
+    if entry.isdigit():
         entry = int(entry)
-    except ValueError:
+    else:
         entry = 0
-        entry = int(entry)
     return entry
 
 def add_win():
