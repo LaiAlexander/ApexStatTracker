@@ -47,8 +47,7 @@ def update_stats():
             damage = int(input("Damage: "))
             legend["damage"] = damage
 
-            matches_played = int(input("Matches played: "))
-            legend["matches_played"] = matches_played
+            legend["matches_played"] = take_input("Matches played: ")
 
             matches_top_three = int(input("Matches top three: "))
             legend["matches_top_three"] = matches_top_three
@@ -61,6 +60,13 @@ def update_stats():
                 json.dump(stats, outfile, indent=4)
             return
     print("Couldn't find legend named " + name)
+
+def take_input(text):
+    entry = input(text)
+    if len(entry) == 0:
+        entry = 0
+    entry = int(entry)
+    return entry
 
 def add_win():
     name = input("Name of legend: ")
@@ -114,8 +120,9 @@ def calculate_stats(kills, damage, matches_played, matches_won=None, matches_top
             return kpm, adr
         top_3_ratio = matches_top_three / matches_played
         win_ratio = matches_won / matches_played
-        return kpm, top_3_ratio, win_ratio, adr
-    return kpm, adr
+    if (matches_won is None or matches_top_three is None):
+        return kpm, adr
+    return kpm, top_3_ratio, win_ratio, adr
 
 def view_stats():
     name = input("Name of legend: ")
