@@ -63,9 +63,11 @@ def update_stats():
 
 def take_input(text):
     entry = input(text)
-    if len(entry) == 0:
+    try:
+        entry = int(entry)
+    except ValueError:
         entry = 0
-    entry = int(entry)
+        entry = int(entry)
     return entry
 
 def add_win():
