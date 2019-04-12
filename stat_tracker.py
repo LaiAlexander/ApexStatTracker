@@ -72,9 +72,11 @@ def add_win():
     legend = stats.get(name, False)
     if legend:
         legend["matches_won"] = legend["matches_won"] + 1
+        legend["matches_played"] = legend["matches_played"] + 1
+        legend["matches_top_three"] = legend["matches_top_three"] + 1
         print("-----------")
         with open("stats.json", "w") as outfile:
-                json.dump(stats, outfile, indent=4)
+            json.dump(stats, outfile, indent=4)
         return
     print("Couldn't find legend named " + name)
 
@@ -86,14 +88,14 @@ def add_match():
 
         legend["matches_played"] = legend["matches_played"] + 1
         legend["matches_won"] = (legend["matches_won"]
-                                    + take_input("Won this match: "))
+                                 + take_input("Won this match: "))
         legend["kills"] = (legend["kills"]
-                            + take_input("Kills this match: "))
+                           + take_input("Kills this match: "))
         legend["damage"] = (legend["damage"]
                             + take_input("Damage this match: "))
         legend["matches_top_three"] = (legend["matches_top_three"]
-                                        + take_input("Top three this match: "))
-        
+                                       + take_input("Top three this match: "))
+
         print("-----------")
         print_current_stats(legend)
 
