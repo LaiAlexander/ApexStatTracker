@@ -139,12 +139,12 @@ def view_all_stats():
     matches_played = 0
     matches_top_three = 0
 
-    for legend in stats:
-        matches_won = matches_won + stats[legend]["matches_won"]
-        kills = kills + stats[legend]["kills"]
-        damage = damage + stats[legend]["damage"]
-        matches_played = matches_played + stats[legend]["matches_played"]
-        matches_top_three = matches_top_three + stats[legend]["matches_top_three"]
+    for legend in stats.values():
+        matches_won = matches_won + legend["matches_won"]
+        kills = kills + legend["kills"]
+        damage = damage + legend["damage"]
+        matches_played = matches_played + legend["matches_played"]
+        matches_top_three = matches_top_three = legend["matches_top_three"]
     print_stats(kills, damage, matches_played, matches_won, matches_top_three)
 
 def print_stats(kills, damage, matches_played, matches_won, matches_top_three):
