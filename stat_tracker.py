@@ -22,12 +22,12 @@ try:
             json.dump(stats, outfile, indent=4)
 except FileNotFoundError:
     stats = legends
-    for legend in stats:
-        stats[legend]["kills"] = 0
-        stats[legend]["damage"] = 0
-        stats[legend]["matches_played"] = 0
-        stats[legend]["matches_won"] = 0
-        stats[legend]["matches_top_three"] = 0
+    for legend in stats.values():
+        legend["kills"] = 0
+        legend["damage"] = 0
+        legend["matches_played"] = 0
+        legend["matches_won"] = 0
+        legend["matches_top_three"] = 0
     with open("stats.json", "w") as outfile:
         json.dump(stats, outfile, indent=4)
 
