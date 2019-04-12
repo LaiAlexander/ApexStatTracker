@@ -4,11 +4,11 @@ A script to help track stats in the game Apex Legends
 
 import json
 
-with open("legends2.json", "r") as read_file:
+with open("legends.json", "r") as read_file:
     legends = json.load(read_file)
 
 try:
-    with open("stats2.json", "r") as read_file:
+    with open("stats.json", "r") as read_file:
         stats = json.load(read_file)
         for legend in legends:
             if legend not in stats:
@@ -18,7 +18,7 @@ try:
                 stats[legend]["matches_played"] = 0
                 stats[legend]["matches_won"] = 0
                 stats[legend]["matches_top_three"] = 0
-        with open("stats2.json", "w") as outfile:
+        with open("stats.json", "w") as outfile:
             json.dump(stats, outfile, indent=4)
 except FileNotFoundError:
     stats = legends
@@ -28,7 +28,7 @@ except FileNotFoundError:
         stats[legend]["matches_played"] = 0
         stats[legend]["matches_won"] = 0
         stats[legend]["matches_top_three"] = 0
-    with open("stats2.json", "w") as outfile:
+    with open("stats.json", "w") as outfile:
         json.dump(stats, outfile, indent=4)
 
 def print_current_stats(legend):
@@ -54,7 +54,7 @@ def update_stats():
 
         print_current_stats(legend)
 
-        with open("stats2.json", "w") as outfile:
+        with open("stats.json", "w") as outfile:
             json.dump(stats, outfile, indent=4)
         return
     print("Couldn't find legend named " + name)
@@ -73,7 +73,7 @@ def add_win():
     if legend:
         legend["matches_won"] = legend["matches_won"] + 1
         print("-----------")
-        with open("stats2.json", "w") as outfile:
+        with open("stats.json", "w") as outfile:
                 json.dump(stats, outfile, indent=4)
         return
     print("Couldn't find legend named " + name)
