@@ -1,29 +1,29 @@
-[
-    {
-        "name": "Bangalore"
+{
+    "Bangalore": {
+
     },
-    {
-        "name": "Bloodhound"
+    "Bloodhound": {
+
     },
-    {
-        "name": "Caustic"
+    "Caustic": {
+
     },
-    {
-        "name": "Gibraltar"
+    "Gibraltar": {
+
     },
-    {
-        "name": "Lifeline"
+    "Lifeline": {
+
     },
-    {
-        "name": "Mirage"
+    "Mirage": {
+
     },
-    {
-        "name": "Octane"
+    "Octane": {
+
     },
-    {
-        "name": "Pathfinder"
+    "Pathfinder": {
+
     },
-    {
-        "name": "Wraith"
+    "Wraith": {
+
     }
-]
+}
